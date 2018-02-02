@@ -11,14 +11,14 @@ class Utilisateur(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
 
     def __str__(self):
-        return f'{self.user}: self.solde €'
+        return str(self.user)
 
     def solde(self):
         solde = Decimal()
         for course in Course.objects.all():
             if course.payeur == self:
                 solde += course.montant
-            solde -= course.part * course.repas_set.filter(mangeurs=self)
+            solde -= course.part() * course.repas_set.filter(mangeurs=self).count()
         return solde
 
 
@@ -31,7 +31,7 @@ class Course(models.Model):
         ordering = ('date', )
 
     def __str__(self):
-        return f'{self.date:%d/%m/%Y}: {self.montant} € par {self.payeur}'
+        return f'{self.date:%d/%m/%Y}: {self.montant} € par {self.payeur.user}'
 
     def repas(self):
         return self.repas_set.count()
