@@ -15,8 +15,11 @@ class FrigoTests(TestCase):
             user = User.objects.create_user(guy, email=f'{guy}@example.org', password=guy)
             Utilisateur.objects.create(user=user)
 
-    def test_models(self):
+    def test_all(self):
         a, b, c = User.objects.all()
+
+        # Models
+
         course = Course.objects.create(date=date(2017, 6, 2), montant=30, payeur=a.utilisateur)
         repas = Repas.objects.create(date=date(2017, 6, 2))
         repas.mangeurs.set(Utilisateur.objects.all())
@@ -40,3 +43,7 @@ class FrigoTests(TestCase):
         self.assertEqual(a.utilisateur.solde(), 15)
         self.assertEqual(b.utilisateur.solde(), -5)
         self.assertEqual(c.utilisateur.solde(), -10)
+
+        # Views
+        for view in ['courses', 'repas', 'utilisateurs']:
+            self.assertEqual(self.client.get(reverse(view)).status_code, 200)
