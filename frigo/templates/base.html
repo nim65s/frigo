@@ -3,3 +3,8 @@
 
 {% block pagetitle %}Frigo - {% block title %}{% if title %}{{ title }}{% else %}\o/{% endif %}{% endblock %}{% endblock %}
 {% block sitetitle %}Frigo{% endblock %}
+{% block navbarleft %}
+<li><a href="{% url 'courses' %}">Courses</a></li>
+<li><a href="{% url 'repas' %}">Repas</a></li>
+<li><a href="{% url 'utilisateurs' %}">Utilisateurs</a></li>
+{% endblock %}
