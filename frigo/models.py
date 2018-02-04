@@ -3,6 +3,7 @@ from decimal import Decimal
 
 from django.conf import settings
 from django.db import models
+from django.urls import reverse
 
 from ndh.utils import query_sum
 
@@ -12,6 +13,9 @@ class Utilisateur(models.Model):
 
     def __str__(self):
         return str(self.user)
+
+    def get_asbolute_url(self):
+        return reverse('utilisateurs')
 
     def solde(self):
         solde = Decimal()
@@ -32,6 +36,9 @@ class Course(models.Model):
 
     def __str__(self):
         return f'{self.date:%d/%m/%Y}: {self.montant} € par {self.payeur.user}'
+
+    def get_absolute_url(self):
+        return reverse('courses')
 
     def repas(self):
         return self.repas_set.count()
@@ -59,4 +66,5 @@ class Repas(models.Model):
         mangeurs = ', '.join(str(user) for user in self.mangeurs.all())
         return f'{self.date:%d/%m/%Y}: {mangeurs}'
 
-
+    def get_absolute_url(self):
+        return reverse('repas')

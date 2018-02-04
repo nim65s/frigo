@@ -3,5 +3,6 @@
 
 {% block content %}
 <h1>Courses</h1>
+<a class="btn btn-success" href="{% url 'add-course' %}">Add</a>
 {% render_table table %}
 {% endblock %}

@@ -18,3 +18,13 @@ class CourseView(SingleTableView):
 class UtilisateurView(SingleTableView):
     model = models.Utilisateur
     table_class = tables.UtilisateurTable
+
+
+class RepasCreateView(CreateView):
+    model = models.Repas
+    fields = ('date', 'mangeurs', 'courses')
+
+
+class CourseCreateView(CreateView):
+    model = models.Course
+    fields = ('date', 'montant', 'payeur')
