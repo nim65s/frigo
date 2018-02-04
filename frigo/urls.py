@@ -10,5 +10,5 @@ urlpatterns = [
     path('courses/add', views.CourseCreateView.as_view(), name='add-course'),
     path('repas', views.RepasView.as_view(), name='repas'),
     path('repas/add', views.RepasCreateView.as_view(), name='add-repas'),
-    path('utilisateurs', views.UtilisateurView.as_view(), name='utilisateurs'),
+    path('', views.UtilisateurView.as_view(), name='utilisateurs'),
 ]
