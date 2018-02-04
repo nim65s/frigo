@@ -14,9 +14,6 @@ class Utilisateur(models.Model):
     def __str__(self):
         return str(self.user)
 
-    def get_asbolute_url(self):
-        return reverse('utilisateurs')
-
     def solde(self):
         solde = Decimal()
         for course in Course.objects.all():
