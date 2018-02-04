@@ -126,3 +126,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 SITE_ID = 1
+
+DJANGO_TABLES2_TEMPLATE = f'{PROJECT}/tables.html'
