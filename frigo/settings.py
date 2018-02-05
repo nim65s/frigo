@@ -26,7 +26,7 @@ SECRET_KEY = '4t+t&&im80@=#^-p2ifw!ir5fu39d^a=3zlj=90(&uldm!c9so'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['frigo.totheweb.fr', 'www.frigo.totheweb.fr']
 
 
 # Application definition
@@ -124,6 +124,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = f'/var/www/{PROJECT}/static_dest'
 
 SITE_ID = 1
 
