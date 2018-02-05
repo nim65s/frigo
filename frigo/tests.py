@@ -1,12 +1,10 @@
 from datetime import date
 
-from django.test import TestCase
 from django.contrib.auth.models import User
-
+from django.test import TestCase
 from django.urls import reverse
-from django.utils.timezone import now
 
-from .models import Utilisateur, Course, Repas
+from .models import Course, Repas, Utilisateur
 
 
 class FrigoTests(TestCase):

@@ -5,8 +5,6 @@ from django.conf import settings
 from django.db import models
 from django.urls import reverse
 
-from ndh.utils import query_sum
-
 
 class Utilisateur(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
