@@ -73,12 +73,21 @@ TEMPLATES = [
 
 WSGI_APPLICATION = f'{PROJECT}.wsgi.application'
 
+DB = environ.get('DB', 'postgres')
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
+        'ENGINE': f'django.db.backends.sqlite3',
         'NAME': join(BASE_DIR, 'db.sqlite3'),
     }
 }
+if DB == 'postgres':
+    DATABASES['default'].update(
+        ENGINE='django.db.backends.postgresql',
+        NAME=environ.get('POSTGRES_DB', DB),
+        USER=environ.get('POSTGRES_USER', DB),
+        HOST=environ.get('POSTGRES_HOST', DB),
+        PASSWORD=environ['POSTGRES_PASSWORD'],
+    )
 
 AUTH_PASSWORD_VALIDATORS = [
     {
