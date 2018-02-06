@@ -6,8 +6,7 @@ PROJECT_VERBOSE = PROJECT.capitalize()
 SELF_MAIL = False
 NAMESPACE = environ.get('NAMESPACE', 'totheweb.fr')
 ALLOWED_HOSTS = [environ.get('ALLOWED_HOST', f'{PROJECT}.{NAMESPACE}')]
-www = [f'www.{host}' for host in ALLOWED_HOSTS]
-ALLOWED_HOSTS += www
+ALLOWED_HOSTS += [f'www.{host}' for host in ALLOWED_HOSTS]
 
 BASE_DIR = dirname(dirname(abspath(__file__)))
 
