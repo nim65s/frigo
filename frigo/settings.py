@@ -1,6 +1,5 @@
 from os import environ
 from os.path import abspath, dirname, join
-from pathlib import Path
 
 PROJECT = 'frigo'
 PROJECT_VERBOSE = PROJECT.capitalize()

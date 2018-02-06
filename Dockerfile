@@ -15,4 +15,3 @@ RUN pip3 install -U -r requirements.txt
 ADD frigo frigo
 
 CMD gunicorn --config gunicorn.conf.py frigo.wsgi
-#CMD python3 manage.py runserver 0.0.0.0:8000
