@@ -3,3 +3,4 @@
 -e git+https://github.com/nim65s/django-YummyEmailOrUsernameInsensitiveAuth.git#egg=django-yeouia
 gunicorn
 django_tables2
+python-memcached
