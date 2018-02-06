@@ -1,0 +1,26 @@
+version: '3'
+
+volumes:
+  srv:
+
+services:
+  postgres:
+    image: postgres:alpine
+    restart: unless-stopped
+  memcached:
+    image: memcached:alpine
+    restart: unless-stopped
+  nginx:
+    image: nim65s/ndh:nginx
+    restart: unless-stopped
+    volumes:
+      - "srv:/srv"
+    ports:
+      - "6500:8000"
+  app:
+    build: .
+    restart: 'no'
+    volumes:
+      - "srv:/srv"
+    env_file:
+      - .env
