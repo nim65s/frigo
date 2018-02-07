@@ -44,6 +44,9 @@ class FrigoTests(TestCase):
 
         # Views
         for view in ['courses', 'repas', 'utilisateurs', 'add-course', 'add-repas']:
+            self.assertEqual(self.client.get(reverse(view)).status_code, 302 if 'add' in view else 200)
+        self.client.login(username='a', password='a')
+        for view in ['courses', 'repas', 'utilisateurs', 'add-course', 'add-repas']:
             self.assertEqual(self.client.get(reverse(view)).status_code, 200)
 
         # Create

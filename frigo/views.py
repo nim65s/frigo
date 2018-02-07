@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView
 
 from django_tables2.views import SingleTableView
@@ -20,11 +21,11 @@ class UtilisateurView(SingleTableView):
     table_class = tables.UtilisateurTable
 
 
-class RepasCreateView(CreateView):
+class RepasCreateView(LoginRequiredMixin, CreateView):
     model = models.Repas
     fields = ('date', 'mangeurs', 'courses')
 
 
-class CourseCreateView(CreateView):
+class CourseCreateView(LoginRequiredMixin, CreateView):
     model = models.Course
     fields = ('date', 'montant', 'payeur')
