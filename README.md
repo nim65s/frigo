@@ -10,6 +10,7 @@ An App for your fridge !
 ### Configuration
 
 ```bash
+echo POSTGRES_PASSWORD=$(openssl rand -base64 32) >> .env
 echo SECRET_KEY=$(openssl rand -base64 32) >> .env
 echo NAMESPACE=$YOUR_FQDN> >> .env
 echo EMAIL_USER=$YOUR_SMTP_USERNAME >> .env
@@ -19,6 +20,8 @@ echo EMAIL_HOST_PASSWORD=$YOUR_SMTP_PASSWORD >> .env
 ### Launch
 
 ```bash
+docker-compose pull
+docker-compose build
 docker-compose up -d
 docker exec frigo_app_1 python3 manage.py migrate
 docker exec frigo_app_1 python3 manage.py collectstatic --no-input

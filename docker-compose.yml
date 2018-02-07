@@ -7,6 +7,8 @@ services:
   postgres:
     image: postgres:alpine
     restart: unless-stopped
+    env_file:
+      - .env
   memcached:
     image: memcached:alpine
     restart: unless-stopped
@@ -19,7 +21,7 @@ services:
       - "6500:8000"
   app:
     build: .
-    restart: 'no'
+    restart: unless-stopped
     volumes:
       - "srv:/srv"
     env_file:
