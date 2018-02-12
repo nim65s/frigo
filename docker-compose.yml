@@ -13,7 +13,7 @@ services:
     image: memcached:alpine
     restart: unless-stopped
   app:
-    build: .
+    image: nim65s/frigo
     restart: unless-stopped
     volumes:
       - "srv:/srv"
