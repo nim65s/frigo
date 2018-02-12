@@ -1,8 +1,10 @@
 language: python
+sudo: required
 python:
     - 3.6
 services:
     - postgresql
+    - docker
 install:
     - pip install -r requirements.txt flake8 python-coveralls safety psycopg2
 env:
@@ -12,5 +14,8 @@ script:
     - coverage run manage.py test
     - flake8 .
     - safety check
+    - docker build -t $TRAVIS_REPO_SLUG .
 after_success:
     - coveralls
+    - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+    - docker push $TRAVIS_REPO_SLUG
