@@ -27,9 +27,16 @@ docker exec frigo_app_1 python3 manage.py migrate
 docker exec frigo_app_1 python3 manage.py collectstatic --no-input
 ```
 
+### Devel
+
+```bash
+docker build -t nim65s/frigo .
+docker-compose up -d
+```
+
 ### Test
 
-```
+```bash
 source .env
 coverage run manage.py test
 ```
