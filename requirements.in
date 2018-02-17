@@ -1,6 +1,5 @@
--e git+https://github.com/nim65s/ndh.git#egg=ndh
--e git+https://github.com/nim65s/django-autoslug#egg=django-autoslug
--e git+https://github.com/nim65s/django-YummyEmailOrUsernameInsensitiveAuth.git#egg=django-yeouia
-gunicorn
+ndh<3
+django-yeouia
 django_tables2
+gunicorn
 python-memcached
