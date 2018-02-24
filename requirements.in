@@ -1,5 +1,2 @@
-ndh<3
-django-yeouia
-django_tables2
-gunicorn
-python-memcached
+ndh
+django-tables2
