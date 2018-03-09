@@ -3,6 +3,6 @@
 
 {% block content %}
 <h1>Courses</h1>
-<a class="btn btn-success {% if not request.user.is_authenticated %}disabled{% endif %}" href="{% url 'add-course' %}">Add</a>
+<a class="btn btn-success {% if not request.user.is_authenticated %}disabled{% endif %}" href="{% url 'frigo:add-course' %}">Add</a>
 {% render_table table %}
 {% endblock %}

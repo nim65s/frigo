@@ -1,9 +1,10 @@
 from datetime import date
-from decimal import Decimal
 
 from django.conf import settings
 from django.db import models
-from django.urls import reverse
+
+from ndh.models import Links
+from ndh.utils import query_sum
 
 
 class Utilisateur(models.Model):
@@ -13,53 +14,66 @@ class Utilisateur(models.Model):
         return str(self.user)
 
     def solde(self):
-        solde = Decimal()
-        for course in Course.objects.all():
-            if course.payeur == self:
-                solde += course.montant
-            solde -= course.part() * course.repas_set.filter(mangeurs=self).count()
+        solde = query_sum(self.course_set, 'montant')
+        for periode in Periode.objects.all():
+            solde -= periode.part() * periode.repas_set.filter(mangeurs=self).count()
         return solde
 
 
-class Course(models.Model):
-    date = models.DateField(default=date.today)
-    montant = models.DecimalField(max_digits=8, decimal_places=2)
-    payeur = models.ForeignKey(Utilisateur, on_delete=models.PROTECT)
+class Periode(Links, models.Model):
+    absolute_url_detail = False
+    debut = models.DateField('début', auto_now_add=True)
 
     class Meta:
-        ordering = ('date', )
+        ordering = ('debut',)
 
     def __str__(self):
-        return f'{self.date:%d/%m/%Y}: {self.montant} € par {self.payeur.user}'
-
-    def get_absolute_url(self):
-        return reverse('courses')
+        return f'{self.debut:%d/%m/%Y}'
 
     def repas(self):
         return self.repas_set.count()
 
     def mangeurs(self):
+        # TODO single query
         return sum(repas.mangeurs.count() for repas in self.repas_set.all())
 
+    def courses(self):
+        return self.course_set.count()
+
+    def montant(self):
+        return query_sum(self.course_set, 'montant')
+
     def part(self):
-        return self.montant / self.mangeurs()
+        return self.montant() / self.mangeurs()
 
 
-def last_course():
-    return Course.objects.last()
+def last_periode():
+    return Periode.objects.last()
 
 
-class Repas(models.Model):
+class Course(Links, models.Model):
+    absolute_url_detail = False
     date = models.DateField(default=date.today)
-    mangeurs = models.ManyToManyField(Utilisateur)
-    courses = models.ForeignKey(Course, default=last_course, on_delete=models.PROTECT)
+    montant = models.DecimalField(max_digits=8, decimal_places=2)
+    payeur = models.ForeignKey(Utilisateur, on_delete=models.PROTECT)
+    periode = models.ForeignKey(Periode, on_delete=models.PROTECT, default=last_periode)
 
     class Meta:
-        ordering = ('date', )
+        ordering = ('date',)
+
+    def __str__(self):
+        return f'{self.date:%d/%m/%Y}: {self.montant} € par {self.payeur.user}'
+
+
+class Repas(Links, models.Model):
+    absolute_url_detail = False
+    date = models.DateField(default=date.today)
+    mangeurs = models.ManyToManyField(Utilisateur)
+    periode = models.ForeignKey(Periode, on_delete=models.PROTECT, default=last_periode)
+
+    class Meta:
+        ordering = ('date',)
 
     def __str__(self):
         mangeurs = ', '.join(str(user) for user in self.mangeurs.all())
         return f'{self.date:%d/%m/%Y}: {mangeurs}'
-
-    def get_absolute_url(self):
-        return reverse('repas')

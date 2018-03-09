@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% load django_tables2 %}
+
+{% block content %}
+<h1>Périodes</h1>
+<a class="btn btn-success" href="{% url 'frigo:add-periode' %}">Passer à une nouvelle Période</a>
+{% render_table table %}
+{% endblock %}

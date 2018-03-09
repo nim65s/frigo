@@ -1,6 +1,8 @@
 from django.contrib.admin import site
 
-from .models import Course, Utilisateur, Repas
+from . import models
 
-for model in [Course, Utilisateur, Repas]:
-    site.register(model)
+site.register(models.Utilisateur)
+site.register(models.Periode)
+site.register(models.Course)
+site.register(models.Repas)
