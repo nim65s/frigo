@@ -12,7 +12,6 @@ class UtilisateurTable(tables.Table):
 
 
 class PeriodeTable(tables.Table):
-    repas = tables.Column(accessor='repas', orderable=False)
     mangeurs = tables.Column(accessor='mangeurs', orderable=False)
     courses = tables.Column(accessor='courses', orderable=False)
     montant = tables.Column(accessor='montant', orderable=False)
