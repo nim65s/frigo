@@ -29,6 +29,7 @@ services:
     volumes:
       - "srv:/srv"
     labels:
+      - "traefik.backend=frigo"
       - "traefik.frontend.rule=Host:frigo.${DOMAIN_NAME:-local}"
     networks:
       - web
