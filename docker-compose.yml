@@ -2,6 +2,7 @@ version: '3'
 
 volumes:
   srv:
+  sql:
 
 services:
   postgres:
@@ -9,6 +10,8 @@ services:
     restart: unless-stopped
     env_file:
       - .env
+    volumes:
+      - "sql:/var/lib/postgresql/data"
   memcached:
     image: memcached:alpine
     restart: unless-stopped
