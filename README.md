@@ -27,20 +27,20 @@ docker exec frigo_app_1 python3 manage.py migrate
 docker exec frigo_app_1 python3 manage.py collectstatic --no-input
 ```
 
-### Devel
+## Prod
 
-```bash
-docker build -t nim65s/frigo .
+### Traefik
+
+```
+docker network create web
+cd traefik
 docker-compose up -d
 ```
 
-### Test
+### Dashboard
 
-```bash
-source .env
-coverage run manage.py test
 ```
-
-### Use
-
-Go to [http://localhost:6500](http://localhost:6500)
+docker-compose up -d
+docker-compose exec app ./manage.py collectstatic --noinput
+docker-compose exec app ./manage.py migrate
+```

@@ -1,2 +1,4 @@
 ndh
 django-tables2
+django-yeouia
+python-memcached

@@ -14,20 +14,23 @@ services:
     restart: unless-stopped
   app:
     image: nim65s/frigo
+    build: .
     restart: unless-stopped
     volumes:
       - "srv:/srv"
     env_file:
       - .env
-    depends_on:
-      - postgres
-      - memcached
   nginx:
     image: nim65s/ndh:nginx
     restart: unless-stopped
     volumes:
       - "srv:/srv"
-    ports:
-      - "6500:8000"
-    depends_on:
-      - app
+    labels:
+      - "traefik.frontend.rule=Host:frigo.totheweb.fr"
+    networks:
+      - web
+      - default
+
+networks:
+  web:
+    external: true

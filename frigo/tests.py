@@ -45,14 +45,6 @@ class FrigoTests(TestCase):
         self.assertEqual(c.solde(), -10)
 
         # Views
-        views = ['courses', 'repass', 'utilisateurs', 'periodes', 'add-course', 'add-repas', 'add-periode']
-        for view in views:
-            self.assertEqual(self.client.get(reverse(view)).status_code, 302 if 'add' in view else 200)
-        self.client.login(username='a', password='a')
-        for view in views:
-            self.assertEqual(self.client.get(reverse(view)).status_code, 200)
-
-        # Create
 
         repas = {'date': date.today(), 'mangeurs': [1, 2], 'periode': 1}
         self.assertEqual(Repas.objects.count(), 4)
@@ -60,8 +52,14 @@ class FrigoTests(TestCase):
         self.assertEqual(Repas.objects.count(), 4)
         self.assertEqual(r.status_code, 302)
 
+        views = ['courses', 'repass', 'utilisateurs', 'periodes', 'add-course', 'add-repas', 'add-periode']
+        for view in views:
+            self.assertEqual(self.client.get(reverse(f'frigo:{view}')).status_code, 302 if 'add' in view else 200)
         self.client.login(username='a', password='a')
+        for view in views:
+            self.assertEqual(self.client.get(reverse(f'frigo:{view}')).status_code, 200)
 
+        # Create
         r = self.client.post(reverse('frigo:add-repas'), repas)
         self.assertEqual(Repas.objects.count(), 5)
         self.assertEqual(r.status_code, 302)

@@ -1,21 +1,15 @@
-FROM alpine:edge
+FROM python:alpine3.7
 
 EXPOSE 8000
-ENV WORKERS=3
 
 RUN mkdir /app
 WORKDIR /app
+
 ADD requirements.txt manage.py ./
 
-RUN apk update && \
-    apk add --no-cache py3-psycopg2 && \
-    apk add --no-cache --virtual .build-deps git && \
-    pip3 install --no-cache-dir -r requirements.txt && \
-    apk del .build-deps
+ENV PYTHONPATH=/usr/lib/python3.6/site-packages
+RUN apk update -q && apk add -q py3-psycopg2 && pip3 install --no-cache-dir -r requirements.txt
 
 ADD frigo frigo
 
-CMD gunicorn \
-    --bind 0.0.0.0:8000 \
-    --workers ${WORKERS} \
-    frigo.wsgi
+CMD ./manage.py runserver 0.0.0.0:8000
