@@ -29,7 +29,7 @@ services:
     volumes:
       - "srv:/srv"
     labels:
-      - "traefik.frontend.rule=Host:frigo.totheweb.fr"
+      - "traefik.frontend.rule=Host:frigo.${DOMAIN_NAME:-local}"
     networks:
       - web
       - default

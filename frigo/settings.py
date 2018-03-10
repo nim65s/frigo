@@ -4,8 +4,8 @@ from os.path import abspath, dirname, join
 PROJECT = 'frigo'
 PROJECT_VERBOSE = PROJECT.capitalize()
 SELF_MAIL = False
-NAMESPACE = environ.get('NAMESPACE', 'totheweb.fr')
-ALLOWED_HOSTS = [environ.get('ALLOWED_HOST', f'{PROJECT}.{NAMESPACE}')]
+DOMAIN_NAME = environ.get('DOMAIN_NAME', 'local')
+ALLOWED_HOSTS = [environ.get('ALLOWED_HOST', f'{PROJECT}.{DOMAIN_NAME}')]
 ALLOWED_HOSTS += [f'www.{host}' for host in ALLOWED_HOSTS]
 
 BASE_DIR = dirname(dirname(abspath(__file__)))
@@ -14,11 +14,11 @@ SECRET_KEY = environ['SECRET_KEY']
 DEBUG = environ.get('DEBUG', 'False').lower() == 'true'
 
 EMAIL_USE_SSL = True
-EMAIL_HOST = environ.get('EMAIL_HOST', f'smtp.{NAMESPACE}')
+EMAIL_HOST = environ.get('EMAIL_HOST', f'smtp.{DOMAIN_NAME}')
 EMAIL_HOST_PASSWORD = environ['EMAIL_HOST_PASSWORD']
 EMAIL_USER = environ.get('EMAIL_USER', 'majo')
 EMAIL_PORT = environ.get('EMAIL_PORT', 465)
-EMAIL_FQDN = environ.get('EMAIL_FQDN', ALLOWED_HOSTS[0] if SELF_MAIL else NAMESPACE)
+EMAIL_FQDN = environ.get('EMAIL_FQDN', ALLOWED_HOSTS[0] if SELF_MAIL else DOMAIN_NAME)
 EMAIL_HOST_USER = f'{EMAIL_USER}@{EMAIL_FQDN}'
 SERVER_EMAIL = f'{EMAIL_USER}+{PROJECT}@{EMAIL_FQDN}'
 DEFAULT_FROM_EMAIL = f'{PROJECT_VERBOSE} <{EMAIL_USER}@{EMAIL_FQDN}>'
@@ -26,7 +26,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.%s' % ('filebased.EmailBackend' if DE
 EMAIL_SUBJECT_PREFIX = f'[{PROJECT_VERBOSE}] '
 
 ADMINS = ((environ.get('ADMIN_NAME', f'{PROJECT_VERBOSE} webmaster'),
-           environ.get('ADMIN_MAIL', f'webmaster@{NAMESPACE}')),)
+           environ.get('ADMIN_MAIL', f'webmaster@{DOMAIN_NAME}')),)
 MANAGERS = ADMINS
 
 INSTALLED_APPS = [
