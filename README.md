@@ -22,7 +22,13 @@ echo DOMAIN_NAME=$YOUR_FQDN> >> .env  # if prod
 
 ## Launch
 
-`docker-compose up -d`
+### Dev
+
+`docker-compose up -d --build`
+
+###  Prod
+
+`docker-compose up -d --pull`
 
 ## Create super user
 
