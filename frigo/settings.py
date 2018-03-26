@@ -143,4 +143,4 @@ LOGGING = {
 
 AUTHENTICATION_BACKENDS = ['yeouia.backends.YummyEmailOrUsernameInsensitiveAuth']
 DJANGO_TABLES2_TEMPLATE = f'{PROJECT}/tables.html'
-LOGIN_URL = '/'
+LOGIN_REDIRECT_URL = '/'
