@@ -30,6 +30,8 @@ ADMINS = ((environ.get('ADMIN_NAME', f'{PROJECT_VERBOSE} webmaster'),
 MANAGERS = ADMINS
 
 INSTALLED_APPS = [
+    PROJECT,
+    'ndh',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,8 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django_tables2',
     'bootstrap4',
-    'ndh',
-    PROJECT,
 ]
 
 MIDDLEWARE = [
