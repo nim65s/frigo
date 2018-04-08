@@ -14,19 +14,19 @@ SECRET_KEY = os.environ['SECRET_KEY']
 DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
 EMAIL_USE_SSL = True
-EMAIL_HOST = environ.get('EMAIL_HOST', f'smtp.{DOMAIN_NAME}')
-EMAIL_HOST_PASSWORD = environ['EMAIL_HOST_PASSWORD']
-EMAIL_USER = environ.get('EMAIL_USER', 'majo')
-EMAIL_PORT = environ.get('EMAIL_PORT', 465)
-EMAIL_FQDN = environ.get('EMAIL_FQDN', ALLOWED_HOSTS[0] if SELF_MAIL else DOMAIN_NAME)
+EMAIL_HOST = os.environ.get('EMAIL_HOST', f'smtp.{DOMAIN_NAME}')
+EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
+EMAIL_USER = os.environ.get('EMAIL_USER', 'majo')
+EMAIL_PORT = os.environ.get('EMAIL_PORT', 465)
+EMAIL_FQDN = os.environ.get('EMAIL_FQDN', ALLOWED_HOSTS[0] if SELF_MAIL else DOMAIN_NAME)
 EMAIL_HOST_USER = f'{EMAIL_USER}@{EMAIL_FQDN}'
 SERVER_EMAIL = f'{EMAIL_USER}+{PROJECT}@{EMAIL_FQDN}'
 DEFAULT_FROM_EMAIL = f'{PROJECT_VERBOSE} <{EMAIL_USER}@{EMAIL_FQDN}>'
 EMAIL_BACKEND = 'django.core.mail.backends.%s' % ('filebased.EmailBackend' if DEBUG else 'smtp.EmailBackend')
 EMAIL_SUBJECT_PREFIX = f'[{PROJECT_VERBOSE}] '
 
-ADMINS = ((environ.get('ADMIN_NAME', f'{PROJECT_VERBOSE} webmaster'),
-           environ.get('ADMIN_MAIL', f'webmaster@{DOMAIN_NAME}')),)
+ADMINS = ((os.environ.get('ADMIN_NAME', f'{PROJECT_VERBOSE} webmaster'),
+           os.environ.get('ADMIN_MAIL', f'webmaster@{DOMAIN_NAME}')),)
 MANAGERS = ADMINS
 
 INSTALLED_APPS = [
@@ -110,7 +110,7 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-SITE_ID = int(environ.get('SITE_ID', 1))
+SITE_ID = int(os.environ.get('SITE_ID', 1))
 
 MEDIA_ROOT = '/srv/media/'
 MEDIA_URL = '/media/'
