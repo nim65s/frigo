@@ -2,7 +2,7 @@ import os
 
 PROJECT = 'frigo'
 PROJECT_VERBOSE = PROJECT.capitalize()
-
+SELF_MAIL = False
 DOMAIN_NAME = os.environ.get('DOMAIN_NAME', 'local')
 HOSTNAME = os.environ.get('ALLOWED_HOST', f'{PROJECT}.{DOMAIN_NAME}')
 ALLOWED_HOSTS = [HOSTNAME]
