@@ -16,13 +16,16 @@ services:
     image: memcached:alpine
     restart: unless-stopped
   app:
-    image: nim65s/frigo
     build: .
     restart: unless-stopped
     volumes:
       - "srv:/srv"
     env_file:
       - .env
+    environment:
+      - DB=postgres
+      - MEMCACHED=True
+      - RAVEN=True
     networks:
       - traefik
       - default

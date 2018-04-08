@@ -1,17 +1,17 @@
-from os import environ
-from os.path import abspath, dirname, join
+import os
 
 PROJECT = 'frigo'
 PROJECT_VERBOSE = PROJECT.capitalize()
-SELF_MAIL = False
-DOMAIN_NAME = environ.get('DOMAIN_NAME', 'local')
-ALLOWED_HOSTS = [environ.get('ALLOWED_HOST', f'{PROJECT}.{DOMAIN_NAME}')]
+
+DOMAIN_NAME = os.environ.get('DOMAIN_NAME', 'local')
+HOSTNAME = os.environ.get('ALLOWED_HOST', f'{PROJECT}.{DOMAIN_NAME}')
+ALLOWED_HOSTS = [HOSTNAME]
 ALLOWED_HOSTS += [f'www.{host}' for host in ALLOWED_HOSTS]
 
-BASE_DIR = dirname(dirname(abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = environ['SECRET_KEY']
-DEBUG = environ.get('DEBUG', 'False').lower() == 'true'
+SECRET_KEY = os.environ['SECRET_KEY']
+DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
 EMAIL_USE_SSL = True
 EMAIL_HOST = environ.get('EMAIL_HOST', f'smtp.{DOMAIN_NAME}')
@@ -73,20 +73,20 @@ TEMPLATES = [
 
 WSGI_APPLICATION = f'{PROJECT}.wsgi.application'
 
-DB = environ.get('DB', 'postgres')
+DB = os.environ.get('DB', 'db.sqlite3')
 DATABASES = {
     'default': {
         'ENGINE': f'django.db.backends.sqlite3',
-        'NAME': join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, DB),
     }
 }
 if DB == 'postgres':
     DATABASES['default'].update(
         ENGINE='django.db.backends.postgresql',
-        NAME=environ.get('POSTGRES_DB', DB),
-        USER=environ.get('POSTGRES_USER', DB),
-        HOST=environ.get('POSTGRES_HOST', DB),
-        PASSWORD=environ['POSTGRES_PASSWORD'],
+        NAME=os.environ.get('POSTGRES_DB', DB),
+        USER=os.environ.get('POSTGRES_USER', DB),
+        HOST=os.environ.get('POSTGRES_HOST', DB),
+        PASSWORD=os.environ['POSTGRES_PASSWORD'],
     )
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -104,8 +104,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = environ.get('LANGUAGE_CODE', 'fr-FR')
-TIME_ZONE = environ.get('TIME_ZONE', 'Europe/Paris')
+LANGUAGE_CODE = os.environ.get('LANGUAGE_CODE', 'fr-FR')
+TIME_ZONE = os.environ.get('TIME_ZONE', 'Europe/Paris')
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
@@ -116,30 +116,19 @@ MEDIA_ROOT = '/srv/media/'
 MEDIA_URL = '/media/'
 STATIC_URL = '/static/'
 STATIC_ROOT = '/srv/static/'
+LOGIN_REDIRECT_URL = '/'
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': 'memcached:11211',
+if os.environ.get('MEMCACHED', 'False').lower() == 'true':
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+            'LOCATION': 'memcached:11211',
+        }
     }
-}
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'null': {
-            'level': 'DEBUG',
-            'class': 'logging.NullHandler',
-        },
-    },
-    'loggers': {
-        'django.security.DisallowedHost': {
-            'handlers': ['null'],
-            'propagate': False,
-        },
-    },
-}
+if os.environ.get('RAVEN', 'False').lower() == 'true':
+    INSTALLED_APPS.append('raven.contrab.django.raven_compat')
+    RAVEN_CONFIG = {'dns': os.environ['DSN']}
 
 AUTHENTICATION_BACKENDS = ['yeouia.backends.YummyEmailOrUsernameInsensitiveAuth']
 DJANGO_TABLES2_TEMPLATE = f'{PROJECT}/tables.html'
