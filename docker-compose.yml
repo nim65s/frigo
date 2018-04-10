@@ -17,6 +17,7 @@ services:
     restart: unless-stopped
   app:
     build: .
+    image: nim65s/frigo
     restart: unless-stopped
     volumes:
       - "srv:/srv"
