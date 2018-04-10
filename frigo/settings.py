@@ -127,7 +127,7 @@ if os.environ.get('MEMCACHED', 'False').lower() == 'true':
     }
 
 if os.environ.get('RAVEN', 'False').lower() == 'true':
-    INSTALLED_APPS.append('raven.contrab.django.raven_compat')
+    INSTALLED_APPS.append('raven.contrib.django.raven_compat')
     RAVEN_CONFIG = {'dns': os.environ['DSN']}
 
 AUTHENTICATION_BACKENDS = ['yeouia.backends.YummyEmailOrUsernameInsensitiveAuth']
