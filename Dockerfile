@@ -13,7 +13,8 @@ RUN apk update -q && apk add -q --no-cache \
  && pip3 install --no-cache-dir -r requirements.txt \
     gunicorn \
     python-memcached \
-    raven
+    raven \
+    requests
 
 ADD . .
 
