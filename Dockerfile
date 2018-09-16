@@ -1,21 +1,22 @@
-FROM python:alpine3.7
+FROM alpine:3.8
 
 EXPOSE 8000
 
 RUN mkdir /app
 WORKDIR /app
 
-ADD requirements.txt ./
-
 RUN apk update -q && apk add -q --no-cache \
     py3-psycopg2 \
- && pip3 install --no-cache-dir -r requirements.txt \
+ && pip3 install --no-cache-dir -U pip \
+ && pip3 install --no-cache-dir \
     gunicorn \
+    pipenv \
     python-memcached \
     raven \
     requests
 
-ENV PYTHONPATH=/usr/lib/python3.6/site-packages
+ADD Pipfile Pipfile.lock ./
+RUN pipenv install --system --deploy
 
 ADD . .
 

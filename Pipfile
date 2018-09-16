@@ -1,0 +1,18 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+ndh = "*"
+"django-tables2" = "*"
+django-yeouia = "*"
+
+[dev-packages]
+"flake8" = "*"
+python-coveralls = "*"
+safety = "*"
+yapf = "*"
+
+[requires]
+python_version = "3.7"

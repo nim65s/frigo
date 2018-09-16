@@ -1,21 +1,24 @@
 language: python
 sudo: required
 python:
-    - 3.6
+  - 3.6
 services:
-    - postgresql
-    - docker
+  - postgresql
+  - docker
 install:
-    - pip install -r requirements.txt flake8 python-coveralls safety psycopg2 raven
+  - pip install pipenv psycopg2 raven
+  - pipenv install --deploy --dev
 env:
-    - SECRET_KEY='pipo' EMAIL_HOST_PASSWORD='pipo' POSTGRES_HOST='localhost' POSTGRES_PASSWORD='' RAVEN=True DSN=''
+  - SECRET_KEY='pipo' EMAIL_HOST_PASSWORD='pipo' POSTGRES_HOST='localhost' POSTGRES_PASSWORD='' RAVEN=True DSN=''
 script:
-    - ./manage.py migrate
-    - coverage run manage.py test
-    - flake8 .
-    - safety check
-    - docker build -t $TRAVIS_REPO_SLUG .
+  - ./manage.py migrate
+  - coverage run manage.py test
+  - flake8 .
+  - yapf -dr .
+  - safety check
+  - pip install "git+https://github.com/${TRAVIS_REPO_SLUG}.git#egg=frigo"
+  - docker build -t $TRAVIS_REPO_SLUG .
 after_success:
-    - coveralls
-    - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
-    - docker push $TRAVIS_REPO_SLUG
+  - coveralls
+  - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+  - docker push $TRAVIS_REPO_SLUG
