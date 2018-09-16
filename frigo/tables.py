@@ -10,7 +10,7 @@ class UtilisateurTable(tables.Table):
 
     class Meta:
         model = models.Utilisateur
-        fields = ('user',)
+        fields = ('user', )
 
     def render_solde(self, value):
         return floatformat(value, 2)
@@ -24,7 +24,7 @@ class PeriodeTable(tables.Table):
 
     class Meta:
         model = models.Periode
-        fields = ('debut',)
+        fields = ('debut', )
 
     def render_montant(self, value):
         return floatformat(value, 2)

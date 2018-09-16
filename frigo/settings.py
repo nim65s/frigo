@@ -26,7 +26,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.%s' % ('filebased.EmailBackend' if DE
 EMAIL_SUBJECT_PREFIX = f'[{PROJECT_VERBOSE}] '
 
 ADMINS = ((os.environ.get('ADMIN_NAME', f'{PROJECT_VERBOSE} webmaster'),
-           os.environ.get('ADMIN_MAIL', f'webmaster@{DOMAIN_NAME}')),)
+           os.environ.get('ADMIN_MAIL', f'webmaster@{DOMAIN_NAME}')), )
 MANAGERS = ADMINS
 
 INSTALLED_APPS = [

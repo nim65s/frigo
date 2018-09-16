@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
                 ('montant', models.DecimalField(decimal_places=2, max_digits=8)),
             ],
             options={
-                'ordering': ('date',),
+                'ordering': ('date', ),
             },
         ),
         migrations.CreateModel(
@@ -36,7 +36,7 @@ class Migration(migrations.Migration):
                 ('debut', models.DateField(auto_now_add=True, verbose_name='début')),
             ],
             options={
-                'ordering': ('debut',),
+                'ordering': ('debut', ),
             },
         ),
         migrations.CreateModel(
@@ -46,14 +46,15 @@ class Migration(migrations.Migration):
                 ('date', models.DateField(default=datetime.date.today)),
             ],
             options={
-                'ordering': ('date',),
+                'ordering': ('date', ),
             },
         ),
         migrations.CreateModel(
             name='Utilisateur',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL)),
+                ('user', models.OneToOneField(
+                    on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.AddField(
@@ -64,7 +65,8 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='repas',
             name='periode',
-            field=models.ForeignKey(default=frigo.models.last_periode, on_delete=django.db.models.deletion.PROTECT, to='frigo.Periode'),
+            field=models.ForeignKey(
+                default=frigo.models.last_periode, on_delete=django.db.models.deletion.PROTECT, to='frigo.Periode'),
         ),
         migrations.AddField(
             model_name='course',
@@ -74,6 +76,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='course',
             name='periode',
-            field=models.ForeignKey(default=frigo.models.last_periode, on_delete=django.db.models.deletion.PROTECT, to='frigo.Periode'),
+            field=models.ForeignKey(
+                default=frigo.models.last_periode, on_delete=django.db.models.deletion.PROTECT, to='frigo.Periode'),
         ),
     ]

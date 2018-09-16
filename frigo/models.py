@@ -25,7 +25,7 @@ class Periode(Links, models.Model):
     debut = models.DateField('début', auto_now_add=True)
 
     class Meta:
-        ordering = ('debut',)
+        ordering = ('debut', )
 
     def __str__(self):
         return f'{self.debut:%d/%m/%Y}'
@@ -59,7 +59,7 @@ class Course(Links, models.Model):
     periode = models.ForeignKey(Periode, on_delete=models.PROTECT, default=last_periode)
 
     class Meta:
-        ordering = ('date',)
+        ordering = ('date', )
 
     def __str__(self):
         return f'{self.date:%d/%m/%Y}: {self.montant} € par {self.payeur.user}'
@@ -72,7 +72,7 @@ class Repas(Links, models.Model):
     periode = models.ForeignKey(Periode, on_delete=models.PROTECT, default=last_periode)
 
     class Meta:
-        ordering = ('date',)
+        ordering = ('date', )
 
     def __str__(self):
         mangeurs = ', '.join(str(user) for user in self.mangeurs.all())
