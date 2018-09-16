@@ -31,9 +31,9 @@ services:
       - proxytanet
       - default
     labels:
-      - "traefik.enable=true"
-      - "traefik.frontend.rule=Host: frigo.${DOMAIN_NAME:-local}"
-      - "traefik.docker.network=traefik"
+      traefik.enable: "true"
+      traefik.frontend.rule: "Host: frigo.${DOMAIN_NAME:-local}"
+      traefik.docker.network: "proxytanet"
   nginx:
     image: nim65s/ndh:nginx
     restart: unless-stopped
@@ -42,8 +42,8 @@ services:
     networks:
       - proxytanet
     labels:
-      - "traefik.enable=true"
-      - "traefik.frontend.rule= Host:frigo.${DOMAIN_NAME:-local}; PathPrefix: /static, /media"
+      traefik.enable: "true"
+      traefik.frontend.rule: "Host:frigo.${DOMAIN_NAME:-local}; PathPrefix: /static, /media"
 
 networks:
   proxytanet:
